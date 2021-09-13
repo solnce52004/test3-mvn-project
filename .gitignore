@@ -7,6 +7,3 @@ out
 src/.DS_Store
 src/main/.DS_Store
 test3.jar
-test3-mvn-project.iml
-module_bl/module_bl.iml
-module_domain/module_domain.iml
