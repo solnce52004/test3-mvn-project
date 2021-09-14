@@ -56,7 +56,7 @@ public class T1000 implements RobotInterface {
 
     public T1000(String name) {
         this.name = name;
-        getDetails();
+        showDetails();
     }
 
     public void setName(String name) {

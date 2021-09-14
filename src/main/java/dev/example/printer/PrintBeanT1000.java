@@ -47,17 +47,24 @@ public class PrintBeanT1000 extends PrintBean<T1000> {
     public static void useT1000Factory(ApplicationContext context) {
         final RobotFactoryInterface robotFactoryBean = (RobotFactoryInterface) context.getBean("t1000FactoryAbstract");
 
+        // print def props on init
         RobotInterface b1 = robotFactoryBean.createRobot();
         RobotInterface b2 = robotFactoryBean.createRobot();
         RobotInterface b3 = robotFactoryBean.createRobot();
 
+        // check set props after init by constructor
+        System.out.println("b1 details:");
+        b1.showDetails();
+
         // check singleton
-        System.out.println("robotFactoryBean " + robotFactoryBean);
-        System.out.println("robotFactoryBean " + robotFactoryBean);
+        System.out.println("robotFactoryBean: " + robotFactoryBean);
+        System.out.println("robotFactoryBean: " + robotFactoryBean);
 
         // check prototype
-        System.out.println("b1 " + b1);
-        System.out.println("b2 " + b2);
-        System.out.println("b3 " + b3);
+        System.out.println("b1: " + b1);
+        System.out.println("b2: " + b2);
+        System.out.println("b3: " + b3);
+
+
     }
 }

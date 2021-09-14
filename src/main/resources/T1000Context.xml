@@ -19,7 +19,6 @@
                 <ref bean="headBean"/>
             </list>
         </property>
-        <!--        <property name="head" ref="headBean" />-->
     </bean>
 
     <bean class="dev.example.beans.robots.T1000" id="t1000InjectBySetterUsingProperty">
@@ -35,7 +34,8 @@
           p:head-ref="headBean"
     />
 
-    <bean class="dev.example.beans.robots.T1000FactoryAbstract" id="t1000FactoryAbstract">
+    <bean class="dev.example.beans.robots.T1000FactoryAbstract"
+            id="t1000FactoryAbstract">
         <lookup-method bean="t1000ConstructWithDetails" name="createRobot"/>
     </bean>
 </beans>
