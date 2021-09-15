@@ -4,7 +4,23 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="headBean" class="dev.example.beans.details.Head"
+          p:detailName="head"
           p:action="spin"
-          scope="prototype"
-    />
+          scope="prototype">
+        <qualifier value="headSpin" />
+    </bean>
+
+    <bean id="legBeanGo" class="dev.example.beans.details.Leg"
+          p:detailName="leg"
+          p:action="go"
+          scope="prototype">
+        <qualifier value="legGo"/>
+    </bean>
+
+    <bean id="legBeanStop" class="dev.example.beans.details.Leg"
+          p:detailName="leg"
+          p:action="stop"
+          scope="prototype">
+        <qualifier value="legStop" />
+    </bean>
 </beans>

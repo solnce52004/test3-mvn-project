@@ -1,30 +1,40 @@
 package dev.example.beans.robots;
 
-
 import dev.example.beans.details.DetailInterface;
-import dev.example.beans.details.Head;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class T1000 implements RobotInterface {
 
     private String name = "default name";
 
-    private DetailInterface head = new Head();
+    @Autowired
+    @Qualifier("headSpin")
+    private DetailInterface head;
+
+    @Autowired
+    @Qualifier("legGo")
     private DetailInterface leg;
     private DetailInterface hand;
-    private List<DetailInterface> details = new ArrayList<>();
+
+    @Autowired // но как отфильтровать по квалфаерам тут?
+    private Set<DetailInterface> details = new HashSet<>();
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
 
     public void setHead(DetailInterface head) {
         this.head = head;
     }
-
     public void setLeg(DetailInterface leg) {
         this.leg = leg;
     }
-
     public void setHand(DetailInterface hand) {
         this.hand = hand;
     }
@@ -32,19 +42,25 @@ public class T1000 implements RobotInterface {
     public DetailInterface getHead() {
         return head;
     }
-
     public DetailInterface getLeg() {
         return leg;
     }
-
     public DetailInterface getHand() {
         return hand;
     }
 
-    public void setDetails(List<DetailInterface> details) {
+    public void setDetails(Set<DetailInterface> details) {
         this.details = details;
     }
 
+    private Set<DetailInterface> getDetails() {
+        if (details.size() <= 1) {
+            details.add(getHead());
+            details.add(getLeg());
+            details.add(getHand());
+        }
+        return details;
+    }
 
     public T1000() {
     }
@@ -59,22 +75,9 @@ public class T1000 implements RobotInterface {
         showDetails();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String getBeanName() {
-        return name;
-    }
-
-    private List<DetailInterface> getDetails() {
-        if (this.details.isEmpty()){
-            this.details.add(getHead());
-            this.details.add(getLeg());
-            this.details.add(getHand());
-        }
-        return details;
+        return getName();
     }
 
     @Override
@@ -83,6 +86,14 @@ public class T1000 implements RobotInterface {
                 .stream()
                 .filter(Objects::nonNull)
                 .forEach(System.out::println);
+    }
+
+    @Override
+    public void showActionDetails() {
+        getDetails()
+                .stream()
+                .filter(Objects::nonNull)
+                .forEach(DetailInterface::action);
     }
 }
 

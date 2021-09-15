@@ -56,6 +56,9 @@ public class PrintBeanT1000 extends PrintBean<T1000> {
         System.out.println("b1 details:");
         b1.showDetails();
 
+        System.out.println("b1 details action:");
+        b1.showActionDetails();
+
         // check singleton
         System.out.println("robotFactoryBean: " + robotFactoryBean);
         System.out.println("robotFactoryBean: " + robotFactoryBean);
