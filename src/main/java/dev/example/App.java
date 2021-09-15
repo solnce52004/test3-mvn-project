@@ -1,5 +1,6 @@
 package dev.example;
 
+import dev.example.printer.PrintBeanHead;
 import dev.example.printer.PrintBeanT1000;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,14 +15,14 @@ public class App {
         final ApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
 
         //T1000
-//        PrintBeanT1000.printBeanNamesT1000(context);
-//        PrintBeanT1000.printBeansT1000(context);
-//        PrintBeanT1000.printDetailsT1000(context);
+        PrintBeanT1000.printBeanNamesT1000(context);
+        PrintBeanT1000.printBeansT1000(context);
+        PrintBeanT1000.printDetailsT1000(context);
         PrintBeanT1000.useT1000Factory(context);
 
         //Head
-//        PrintBeanHead.printBeanHead(context);
-//        PrintBeanHead.printActionHead(context);
+        PrintBeanHead.printBeanHead(context);
+        PrintBeanHead.printActionHead(context);
     }
 
     public static String sayHello() {

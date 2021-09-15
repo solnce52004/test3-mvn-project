@@ -3,7 +3,7 @@ package dev.example.printer;
 import org.springframework.context.ApplicationContext;
 
 public class PrintBean<T extends PrintBeanInterface> {
-    public void printBeanNames(
+    public static  <T extends PrintBeanInterface> void printBeanNames(
             ApplicationContext context,
             Class<T> clazz,
             String[] beanNames
@@ -17,7 +17,7 @@ public class PrintBean<T extends PrintBeanInterface> {
         }
     }
 
-    public void printBeans(
+    public static  <T extends PrintBeanInterface> void printBeans(
             ApplicationContext context,
             Class<T> clazz,
             String[] beanNames

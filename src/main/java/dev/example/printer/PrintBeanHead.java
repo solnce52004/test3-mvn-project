@@ -9,13 +9,13 @@ public class PrintBeanHead extends PrintBean<Head>{
         // Test bean scope (prototype)
         return new String[] {
                 Head.BEAN_NAME,
-//                Head.BEAN_NAME,
-//                Head.BEAN_NAME,
+                Head.BEAN_NAME,
+                Head.BEAN_NAME,
         };
     }
 
     public static void printBeanHead(ApplicationContext context){
-        new PrintBean<Head>().printBeans(
+        PrintBean.printBeans(
                 context,
                 Head.class,
                 getBeanNames()

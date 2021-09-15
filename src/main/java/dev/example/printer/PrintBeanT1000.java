@@ -10,16 +10,16 @@ public class PrintBeanT1000 extends PrintBean<T1000> {
 
     public static String[] getBeanNames() {
         return new String[]{
-//                "t1000",
+                "t1000",
                 "t1000ConstructWithDetails",
-//                "t1000InjectBySetterUsingProperty",
-//                "t1000InjectBySetterUsingNamespace",
-//                "t1000WithHead"
+                "t1000InjectBySetterUsingProperty",
+                "t1000InjectBySetterUsingNamespace",
+                "t1000WithHead"
         };
     }
 
     public static void printBeanNamesT1000(ApplicationContext context) {
-        new PrintBean<T1000>().printBeanNames(
+        PrintBean.printBeanNames(
                 context,
                 T1000.class,
                 getBeanNames()
@@ -27,7 +27,7 @@ public class PrintBeanT1000 extends PrintBean<T1000> {
     }
 
     public static void printBeansT1000(ApplicationContext context) {
-        new PrintBean<T1000>().printBeans(
+        PrintBean.printBeans(
                 context,
                 T1000.class,
                 getBeanNames()

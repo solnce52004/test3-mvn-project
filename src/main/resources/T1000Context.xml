@@ -7,10 +7,14 @@
 
     <bean class="dev.example.beans.robots.T1000" id="t1000"/>
 
-    <bean class="dev.example.beans.robots.T1000" id="t1000ConstructWithDetails"
+    <bean id="t1000ConstructWithDetails"
+          class="dev.example.beans.robots.T1000"
           scope="prototype"
-    >
+          parent="baseModel">
         <constructor-arg name="name" type="java.lang.String" value="constr"/>
+    </bean>
+
+    <bean id="baseModel" scope="prototype" abstract="true">
         <property name="details">
             <list>
                 <ref bean="headBean"/>
@@ -35,7 +39,7 @@
     />
 
     <bean class="dev.example.beans.robots.T1000FactoryAbstract"
-            id="t1000FactoryAbstract">
+          id="t1000FactoryAbstract">
         <lookup-method bean="t1000ConstructWithDetails" name="createRobot"/>
     </bean>
 </beans>
