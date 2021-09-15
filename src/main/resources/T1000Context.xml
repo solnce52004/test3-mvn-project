@@ -15,6 +15,7 @@
     </bean>
 
     <bean id="baseModel" scope="prototype" abstract="true">
+        <property name="name" value="baseModel"/>
         <property name="details">
             <list>
                 <ref bean="headBean"/>
@@ -34,7 +35,7 @@
     />
 
     <bean class="dev.example.beans.robots.T1000" id="t1000WithHead"
-          p:name="headBean"
+          p:name="#{T(dev.example.beans.details.Head).BEAN_NAME}"
           p:head-ref="headBean"
     />
 
