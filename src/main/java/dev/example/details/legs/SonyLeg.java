@@ -1,8 +1,5 @@
 package dev.example.details.legs;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class SonyLeg implements LegInterface {
 
     private String name = "SonyLeg";

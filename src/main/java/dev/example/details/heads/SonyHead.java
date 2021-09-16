@@ -1,8 +1,5 @@
 package dev.example.details.heads;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class SonyHead implements HeadInterface {
     private String name = "SonyHead";
 

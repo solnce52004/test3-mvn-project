@@ -27,6 +27,10 @@ public class T1000 implements RobotInterface {
         this.leg = leg;
     }
 
+    public T1000(String name) {
+        this.name = name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
