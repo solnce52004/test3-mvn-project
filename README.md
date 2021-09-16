@@ -5,8 +5,8 @@
 для сборки maven
 - создать файл src/main/resources/META-INF/MANIFEST.MF
 - добавить в него как минимум
-  Main-Class: App
-  Manifest-Version: 1.0
+  - Main-Class: App
+  - Manifest-Version: 1.0
 - в pom.xml добавить
  
          <plugin>

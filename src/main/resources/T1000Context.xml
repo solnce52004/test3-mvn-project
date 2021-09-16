@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="DetailsContext.xml"/>
+
+    <bean class="dev.example.beans.robots.T1000" id="t1000"/>
+
+    <bean id="t1000ConstructWithDetails"
+          class="dev.example.beans.robots.T1000"
+          scope="prototype">
+        <constructor-arg name="name" type="java.lang.String" value="constr"/>
+    </bean>
+
+<!--    <bean id="baseModel" scope="prototype" abstract="true">-->
+<!--        <property name="name" value="baseModel"/>-->
+<!--        <property name="details">-->
+<!--            <list>-->
+<!--                <ref bean="headBean"/>-->
+<!--                <ref bean="headBean"/>-->
+<!--                <ref bean="legBeanGo"/>-->
+<!--                <ref bean="legBeanStop"/>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+    <bean class="dev.example.beans.robots.T1000" id="t1000InjectBySetterUsingProperty">
+        <property name="name" value="InjectBySetterUsingProperty"/>
+    </bean>
+
+    <bean class="dev.example.beans.robots.T1000" id="t1000InjectBySetterUsingNamespace"
+          p:name="t1000InjectBySetterUsingNamespace"
+    />
+
+    <bean class="dev.example.beans.robots.T1000" id="t1000WithHead"
+          p:name="#{T(dev.example.beans.details.Head).BEAN_NAME}"
+          p:head-ref="headBean"
+    />
+
+    <bean class="dev.example.beans.robots.T1000FactoryAbstract"
+          id="t1000FactoryAbstract">
+        <lookup-method bean="t1000ConstructWithDetails" name="createRobot"/>
+    </bean>
+</beans>
