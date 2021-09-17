@@ -4,4 +4,6 @@ public interface RobotInterface {
     void action();
 
     void say();
+
+    RobotInterface getInstance();
 }

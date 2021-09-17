@@ -1,18 +1,19 @@
 package dev.example.details.heads;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class SonyHead implements HeadInterface {
-    private String name = "SonyHead";
+    @Value("SonyHead")
+    private String name;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public void think() {
-        System.out.println(name + " is thinking");
+        System.out.println(getName() + " is thinking");
     }
 }

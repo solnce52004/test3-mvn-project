@@ -8,56 +8,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+// по прежнему синглтон
 public class T2000 implements RobotInterface {
-    @Value("${T2000.name}")
-    private String name = "T2000";
+    private final String name;
+    private final HeadInterface head;
+    private final LegInterface leg;
 
-//    @Autowired
-//    @Qualifier("sonyHead")
-    private HeadInterface head;
-
-//    @Autowired
-//    @Qualifier("sonyLeg")
-    private LegInterface leg;
-
-    public T2000() {
-    }
-
+    @Autowired
     public T2000(
-            HeadInterface head,
-
-            LegInterface leg
+            @Value("${T2000.name}") String name,
+            @Qualifier("sonyHead") HeadInterface head,
+            @Qualifier("sonyLeg") LegInterface leg
     ) {
+        this.name = name;
         this.head = head;
         this.leg = leg;
-    }
-
-    public T2000(String name) {
-        this.name = name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setHead(HeadInterface head) {
-        this.head = head;
-    }
-
-    public void setLeg(LegInterface leg) {
-        this.leg = leg;
+        action();
+        say();
     }
 
     public String getName() {
         return name;
-    }
-
-    public HeadInterface getHead() {
-        return head;
-    }
-
-    public LegInterface getLeg() {
-        return leg;
     }
 
     @Override
@@ -69,5 +40,13 @@ public class T2000 implements RobotInterface {
     @Override
     public void say() {
         System.out.println("i am " + getName());
+    }
+
+    @Override
+    public RobotInterface getInstance() {
+        RobotInterface t = new T2000(name, head, leg);
+        System.out.println("T2000:___" + t);
+
+        return t;
     }
 }
