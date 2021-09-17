@@ -9,19 +9,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class T1000 implements RobotInterface {
     private String name = "T1000";
-    @Autowired
-    @Qualifier("boshHead")
+    //    @Autowired
+//    @Qualifier("boshHead")
     private HeadInterface head;
-    @Autowired
-    @Qualifier("boshLeg")
+    //    @Autowired
+//    @Qualifier("boshLeg")
     private LegInterface leg;
 
     public T1000() {
     }
 
+    @Autowired
     public T1000(
-            HeadInterface head,
-            LegInterface leg
+            @Qualifier("boshHeadComponent")
+                    HeadInterface head,
+            @Qualifier("boshLegComponent")
+                    LegInterface leg
     ) {
         this.head = head;
         this.leg = leg;

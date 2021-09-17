@@ -1,5 +1,8 @@
 package dev.example.details.heads;
 
+import org.springframework.stereotype.Component;
+
+@Component("boshHeadComponent")
 public class BoshHead implements HeadInterface {
     private String name = "BoshHead";
 

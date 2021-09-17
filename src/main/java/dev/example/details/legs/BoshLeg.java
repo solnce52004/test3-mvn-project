@@ -1,5 +1,8 @@
 package dev.example.details.legs;
 
+import org.springframework.stereotype.Component;
+
+@Component("boshLegComponent")
 public class BoshLeg implements LegInterface {
 
     private String name = "BoshLeg";
