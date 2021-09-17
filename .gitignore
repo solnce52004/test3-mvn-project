@@ -1,6 +1,6 @@
 .idea
-src/main/resources/from_idea
 target
+lib
 .DS_Store
 src/.DS_Store
 src/main/.DS_Store

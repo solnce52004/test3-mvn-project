@@ -1,16 +1,16 @@
 package dev.example;
 
+import dev.config.AppConfig;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 public class App {
-
-    public static final String HELLO_WORLD = "Hello World!";
-
     public static void main(String[] args) {
-        System.out.println(sayHello());
+        //XML
+//        ApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+
+        // set config class by register
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(AppConfig.class);
+        context.refresh();
     }
-
-    public static String sayHello() {
-        return HELLO_WORLD;
-    }
-
-
 }
