@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-@ComponentScan("dev.example")
+@ComponentScan(basePackages = "dev.example")
 public class App {
     public static void main(String[] args) {
         //XML

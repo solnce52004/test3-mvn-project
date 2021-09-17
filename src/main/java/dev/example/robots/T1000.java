@@ -9,15 +9,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class T1000 implements RobotInterface {
     private String name = "T1000";
-    //    @Autowired
+//    @Autowired
 //    @Qualifier("boshHead")
-    private HeadInterface head;
-    //    @Autowired
+    // указание final ОБЯЗЫВАЕТ сделать инжект через конструкор
+    private final HeadInterface head;
+//    @Autowired
 //    @Qualifier("boshLeg")
-    private LegInterface leg;
+    private final LegInterface leg;
 
-    public T1000() {
-    }
+//    public T1000() {
+//    }
 
     @Autowired
     public T1000(
@@ -30,21 +31,21 @@ public class T1000 implements RobotInterface {
         this.leg = leg;
     }
 
-    public T1000(String name) {
-        this.name = name;
-    }
+//    public T1000(String name) {
+//        this.name = name;
+//    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setHead(HeadInterface head) {
-        this.head = head;
-    }
-
-    public void setLeg(LegInterface leg) {
-        this.leg = leg;
-    }
+//    public void setHead(HeadInterface head) {
+//        this.head = head;
+//    }
+//
+//    public void setLeg(LegInterface leg) {
+//        this.leg = leg;
+//    }
 
     public String getName() {
         return name;

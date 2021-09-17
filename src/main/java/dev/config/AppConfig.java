@@ -44,11 +44,11 @@ public class AppConfig {
         return new SonyLeg();
     }
 
-    @Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public RobotInterface t1000(@Value("${T1000.name}") String name) {
-        return new T1000(name);
-    }
+//    @Bean
+//    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//    public RobotInterface t1000(@Value("${T1000.name}") String name) {
+//        return new T1000(name);
+//    }
 
 //    @Bean
 //    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
