@@ -3,7 +3,7 @@ package dev.example.entities;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class User {
     @Value("55")
     private final int id;
