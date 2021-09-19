@@ -1,11 +1,12 @@
-package dev.config.annotations;
+package dev.example.aop.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@Target(value = {ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-public @interface PrintUserId {
+public @interface PrintUser {
+    boolean isPrint() default false;
 }

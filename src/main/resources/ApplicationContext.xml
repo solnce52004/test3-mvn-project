@@ -11,7 +11,7 @@
     <aop:config>
         <aop:aspect id="logId" ref="userLogger">
             <aop:pointcut id="pointcutId"  expression="execution(* dev.example.dao.impls.UserDaoImpl.findById(..))"/>
-            <aop:after-returning pointcut-ref="pointcutId" method="logUserId" returning="user" />
+            <aop:after-returning pointcut-ref="pointcutId" method="afterReturningUserIdLogAdvice" returning="user" />
         </aop:aspect>
     </aop:config>
 </beans>
