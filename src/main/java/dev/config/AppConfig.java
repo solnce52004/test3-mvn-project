@@ -9,6 +9,5 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan(basePackages = "dev")
 @PropertySource("classpath:application.properties")
 //@EnableAspectJAutoProxy
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class AppConfig {
 }

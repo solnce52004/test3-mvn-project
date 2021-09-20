@@ -1,10 +1,14 @@
 package dev.example.entities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 //@Component
 public class User {
+    Logger logger = LoggerFactory.getLogger(User.class);
+
     @Value("55")
     private final int id;
     private final String name;
@@ -18,6 +22,9 @@ public class User {
         this.id = id;
         this.name = name;
         this.age = age;
+        logger.debug("User DEBUG: created new instance");
+        logger.info("User INFO: created new instance");
+        logger.error("User ERROR: created new instance");
     }
 
     public int getId() {
