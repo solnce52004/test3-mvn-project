@@ -1,16 +1,22 @@
 package dev.example.aop.loggers;
 
 import dev.example.aop.annotations.PrintUser;
+import dev.example.dao.impls.UserDaoImpl;
 import dev.example.entities.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class UserLogger {
+
+    private static final Logger USER_DAO_IMPL_LOG = LoggerFactory.getLogger(UserDaoImpl.class);
+    private static final Logger USER_LOGGER = LoggerFactory.getLogger(UserLogger.class);
 
     @Pointcut("execution(* dev.example.dao.impls.UserDaoImpl.findById(..))")
     private void findUserByIdPointcut() {
@@ -38,8 +44,13 @@ public class UserLogger {
             @NonNull JoinPoint joinPoint,
             PrintUser printUser
     ) {
-        System.out.println("@Before: isPrint: " + printUser.isPrint());
-        System.out.println("@Before: Method: " + joinPoint.getSignature().getName());
+        final String targetMethod = joinPoint.getSignature().getName();
+
+        if (printUser.isPrint()) {
+            USER_DAO_IMPL_LOG.info("@Before(isPrint):method: {}", targetMethod);
+        }
+
+        USER_LOGGER.info("@Before:(advice)method: {}", targetMethod);
     }
 
     @AfterReturning(
@@ -54,9 +65,16 @@ public class UserLogger {
             @NonNull User user,
             PrintUser printUser
     ) {
-        System.out.println("@AfterReturning: isPrint: " + printUser.isPrint());
-        System.out.println("@AfterReturning: Method: " + joinPoint.getSignature().getName());
-        System.out.println("@AfterReturning: user id log: " + user.getId());
+        final String targetMethod = joinPoint.getSignature().getName();
+
+        if (printUser.isPrint()) {
+            USER_DAO_IMPL_LOG.info("@AfterReturning(isPrint):method: {}", targetMethod);
+            //проверить настройки скоупа логгера для данного класса
+            USER_DAO_IMPL_LOG.debug("@AfterReturning(isPrint) DEBUG :method: {}", targetMethod);
+        }
+
+        USER_LOGGER.info("@AfterReturning:(advice)method: {}", targetMethod);
+        USER_LOGGER.info("@AfterReturning:(advice)userId: {}", user.getId());
     }
 
     @After(
@@ -67,8 +85,13 @@ public class UserLogger {
             @NonNull JoinPoint joinPoint,
             PrintUser printUser
     ) {
-        System.out.println("@After...: isPrint: " + printUser.isPrint());
-        System.out.println("@After...: Method: " + joinPoint.getSignature().getName());
+        final String targetMethod = joinPoint.getSignature().getName();
+
+        if (printUser.isPrint()) {
+            USER_DAO_IMPL_LOG.info("@After(isPrint):method: {}", targetMethod);
+        }
+
+        USER_LOGGER.info("@After:(advice)method: {}", targetMethod);
     }
 
     @Around(
@@ -79,9 +102,17 @@ public class UserLogger {
             ProceedingJoinPoint proceedingJoinPoint,
             PrintUser printUser
     ) {
-        System.out.println("@Around: isPrint: " + printUser.isPrint());
-        System.out.println("@Around: before...");
+        final String targetMethod = proceedingJoinPoint.getSignature().getName();
+
+        if (printUser.isPrint()) {
+            USER_DAO_IMPL_LOG.info("@After(isPrint):method: {}", targetMethod);
+        }
+
+        USER_LOGGER.info("@Around:(advice)method: {}", targetMethod);
+        USER_LOGGER.info("@Around:(advice) before proceed...");
+
         Object joinPoint = null;
+
         try {
             joinPoint = proceedingJoinPoint.proceed();
 
@@ -89,13 +120,13 @@ public class UserLogger {
             // теперь сработает @AfterReturning
             // теперь сработает @After
             // (остальное ниже - только после @After)
-            System.out.println("@Around: proceed...");
+            USER_LOGGER.info("@Around:(advice) proceed...");
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            USER_LOGGER.error(throwable.getMessage());
         }
 
         // сработает только после @After
-        System.out.println("@Around: after...");
+        USER_LOGGER.info("@Around:(advice) after proceed...");
 
         return joinPoint;
     }

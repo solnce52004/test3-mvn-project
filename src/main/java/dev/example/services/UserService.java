@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements BaseServiceInterface
 {
-    private final static Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final static Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserDao adminUserDao;
 
     @Autowired
@@ -17,9 +17,7 @@ public class UserService implements BaseServiceInterface
         this.adminUserDao = adminUserDao;
         print();
 
-        logger.debug("UserService DEBUG: created new instance");
-        logger.info("UserService INFO: created new instance");
-        logger.error("UserService ERROR: created new instance");
+        log.info("UserService INFO: created new instance");
     }
 
     @Override

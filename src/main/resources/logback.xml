@@ -5,8 +5,7 @@
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${ROLLING_FILE_NAME}</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%date %level [%thread] [%file:%line] %msg%n</pattern>
-<!--            <pattern>%d %p %C{1.} [%t] %m%n</pattern>-->
+            <pattern>${PATTERN_STDOUT_TO_ROLLING}</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${ROLLING_ARCHIVED_FILE_NAME}</fileNamePattern>
@@ -18,16 +17,12 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>
-                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %blue(%logger{100}): %msg%n%throwable
-            </pattern>
+            <pattern>${PATTERN_STDOUT}</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
-    </root>
-    <root level="INFO">
         <appender-ref ref="RollingFile"/>
     </root>
 
