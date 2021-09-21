@@ -3,11 +3,18 @@ package dev.example.aop.loggers;
 import dev.example.aop.annotations.PrintUser;
 import dev.example.dao.impls.UserDaoImpl;
 import dev.example.entities.User;
+
+//logback
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
+//log4j2
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +22,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserLogger {
 
-    private static final Logger USER_DAO_IMPL_LOG = LoggerFactory.getLogger(UserDaoImpl.class);
-    private static final Logger USER_LOGGER = LoggerFactory.getLogger(UserLogger.class);
+    //logback
+//    private static final Logger USER_DAO_IMPL_LOG = LoggerFactory.getLogger(UserDaoImpl.class);
+//    private static final Logger USER_LOGGER = LoggerFactory.getLogger(UserLogger.class);
+
+    //log4j2
+    private static final Logger USER_DAO_IMPL_LOG = LogManager.getLogger(UserDaoImpl.class.getName());
+    private static final Logger USER_LOGGER = LogManager.getLogger(UserLogger.class.getName());
 
     @Pointcut("execution(* dev.example.dao.impls.UserDaoImpl.findById(..))")
     private void findUserByIdPointcut() {
@@ -51,6 +63,10 @@ public class UserLogger {
         }
 
         USER_LOGGER.info("@Before:(advice)method: {}", targetMethod);
+
+        //by default Log4j assigns the root logger to Level.ERROR !!!!!
+        USER_LOGGER.warn("@Before:(advice)method: {}", targetMethod);
+        USER_LOGGER.error("@Before:(advice)method: {}", targetMethod);
     }
 
     @AfterReturning(

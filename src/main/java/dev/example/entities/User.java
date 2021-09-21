@@ -1,11 +1,12 @@
 package dev.example.entities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 public class User {
-    Logger log = LoggerFactory.getLogger(User.class);
+//    private final static Logger log = LoggerFactory.getLogger(User.class);
+    private final static Logger log = LogManager.getLogger(User.class.getName());
 
     @Value("55")
     private final int id;
