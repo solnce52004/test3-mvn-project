@@ -1,16 +1,19 @@
 package dev.example;
 
+import dev.config.AppConfig;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
+
+@Component
 public class App {
 
-    public static final String HELLO_WORLD = "Hello World!";
-
     public static void main(String[] args) {
-        System.out.println(sayHello());
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(AppConfig.class);
+        context.refresh();
+
+        // by XMl
+//        final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+//        context.getBean(UserBaseService.class);
     }
-
-    public static String sayHello() {
-        return HELLO_WORLD;
-    }
-
-
 }
