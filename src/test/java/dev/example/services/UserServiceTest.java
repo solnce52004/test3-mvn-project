@@ -4,7 +4,9 @@ import dev.example.dao.interfaces.UserDao;
 import dev.example.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.assertj.core.internal.bytebuddy.build.ToStringPlugin;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,6 +72,7 @@ class UserServiceTest {
     }
 
     @Test
+    @Disabled
     void checkUserPresence_By_Id_Verify_Times_Test() throws Exception {
         given(userDaoMock.findById(User.DEF_ID))
                 .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
@@ -81,10 +84,10 @@ class UserServiceTest {
                 .findByName(anyString());
         verify(userDaoMock, times(1))
                 .findById(User.DEF_ID);
-
     }
 
     @Test
+    @Disabled
     void checkUserPresence_Test_Captor_By_Name_Test() throws Exception {
         given(userDaoMock.findByName(User.DEF_NAME))
                 .willReturn(DEFAULT_USER);
@@ -103,6 +106,7 @@ class UserServiceTest {
      * @throws Exception
      */
     @Test
+    @Disabled
     void checkUserPresence_Test_Captor_By_Id_Test() throws Exception {
         given(userDaoMock.findById(User.DEF_ID))
                 .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);

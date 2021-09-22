@@ -65,8 +65,8 @@ public class UserLogger {
         USER_LOGGER.info("@Before:(advice)method: {}", targetMethod);
 
         //by default Log4j assigns the root logger to Level.ERROR !!!!!
-        USER_LOGGER.warn("@Before:(advice)method: {}", targetMethod);
-        USER_LOGGER.error("@Before:(advice)method: {}", targetMethod);
+        USER_LOGGER.warn("@Before:(advice)method try WARN LEVEL: {}", targetMethod);
+        USER_LOGGER.error("@Before:(advice)method try ERROR LEVEL: {}", targetMethod);
     }
 
     @AfterReturning(
@@ -138,7 +138,9 @@ public class UserLogger {
             // (остальное ниже - только после @After)
             USER_LOGGER.info("@Around:(advice) proceed...");
         } catch (Throwable throwable) {
-            USER_LOGGER.error(throwable.getMessage());
+//            USER_LOGGER.error("@Around:(advice) proceed ERROR message: {} ", throwable.getCause().toString());
+            USER_LOGGER.error("@Around:(advice) proceed ERROR in method: {} ", targetMethod);
+            USER_LOGGER.error("@Around:(advice) proceed ERROR with args: {} ", proceedingJoinPoint.getArgs());
         }
 
         // сработает только после @After
