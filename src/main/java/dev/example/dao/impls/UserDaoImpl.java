@@ -12,13 +12,13 @@ public class UserDaoImpl implements UserDao {
     @PrintUser(isPrint = true)
     public User findById(int id) {
         //заглушка
-        return new User(id, "Ivan", 100);
+        return new User(id, User.DEF_NAME, User.DEF_AGE);
     }
 
     @Override
     @PrintUser
     public User findByName(String name) {
         //заглушка
-        return new User(789, name, 100);
+        return new User(User.DEF_ID, name, User.DEF_AGE);
     }
 }

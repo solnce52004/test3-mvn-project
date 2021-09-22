@@ -1,34 +1,49 @@
 package dev.example.entities;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
-public class User {
-//    private final static Logger log = LoggerFactory.getLogger(User.class);
-    private final static Logger log = LogManager.getLogger(User.class.getName());
+import java.util.Objects;
 
-    @Value("55")
-    private final int id;
-    private final String name;
-    private final int age;
+public class User {
+
+    public static final int DEF_ID = 789;
+    public static final String DEF_NAME = "Peter";
+    public static final int DEF_AGE = 100;
+
+    // TODO: уточнить
+    //в каких случаях при вызове конструктора поля по дефолту будут заполнены из пропертей @Value
+    @Value("${default.user.id}")
+    private int id;
+    @Value("${default.user.name}")
+    private String name;
+    @Value("${default.user.age}")
+    private int age;
 
     public User(
-            @Value("55") int id,
-            @Value("${default.user.name}") String name,
-            @Value("${default.user.age}") int age
+            int id,
+            String name,
+            int age
     ) {
         this.id = id;
         this.name = name;
         this.age = age;
-
-        //try
-        log.trace("User INFO: created new instance");
-        log.debug("User INFO: created new instance");
     }
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() && age == user.age && name.equals(user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), name, age);
     }
 
     @Override

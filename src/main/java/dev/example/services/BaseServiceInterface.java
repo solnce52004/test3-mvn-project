@@ -1,5 +1,9 @@
 package dev.example.services;
 
+import dev.example.entities.User;
+
 public interface BaseServiceInterface {
-    void print();
+    User findUserById(int id);
+
+    User findUserByName(String name);
 }

@@ -1,31 +1,39 @@
 package dev.example.services;
 
 import dev.example.dao.interfaces.UserDao;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import dev.example.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements BaseServiceInterface
 {
-//    private final static Logger log = LoggerFactory.getLogger(UserService.class);
-    private final static Logger log = LogManager.getLogger(UserService.class.getName());
-    private final UserDao adminUserDao;
+    private final UserDao userDao;
 
     @Autowired
-    public UserService(UserDao adminUserDao) {
-        this.adminUserDao = adminUserDao;
-        print();
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
 
-        log.info("UserService INFO: created new instance");
+        // для тестирования логов и аспектов
+//        printUserById();
+//        printUserByName();
+    }
+
+//    private void printUserById() {
+//        System.out.println(getUserById(1111));
+//    }
+//
+//    private void printUserByName() {
+//        System.out.println(getUserByName("Mary"));
+//    }
+
+    @Override
+    public User findUserById(int id) {
+        return userDao.findById(id);
     }
 
     @Override
-    public void print() {
-        System.out.println(adminUserDao.findById(1111));
-        System.out.println(adminUserDao.findById(20));
-
-        System.out.println(adminUserDao.findByName("Mary"));
+    public User findUserByName(String name) {
+        return userDao.findByName(name);
     }
 }
