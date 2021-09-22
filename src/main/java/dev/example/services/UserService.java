@@ -6,34 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements BaseServiceInterface
-{
+public class UserService {
     private final UserDao userDao;
 
     @Autowired
     public UserService(UserDao userDao) {
         this.userDao = userDao;
-
-        // для тестирования логов и аспектов
-//        printUserById();
-//        printUserByName();
     }
 
-//    private void printUserById() {
-//        System.out.println(getUserById(1111));
-//    }
-//
-//    private void printUserByName() {
-//        System.out.println(getUserByName("Mary"));
-//    }
+    public User findUserById(long id) throws Exception {
+        if (id <= 0L) {
+            throw new IllegalArgumentException();
+        }
 
-    @Override
-    public User findUserById(int id) {
         return userDao.findById(id);
     }
 
-    @Override
-    public User findUserByName(String name) {
+    public User findUserByName(String name) throws Exception {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         return userDao.findByName(name);
+    }
+
+    public boolean checkUserPresence(User user) throws Exception{
+        final User byName = !user.getName().isEmpty()
+                ? userDao.findByName(user.getName())
+                : userDao.findById(user.getId());
+
+        return byName != null;
     }
 }

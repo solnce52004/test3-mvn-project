@@ -4,60 +4,145 @@ import dev.example.dao.interfaces.UserDao;
 import dev.example.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     private static final Logger LOG = LogManager.getLogger(UserServiceTest.class);
-    private static final User DEFAULT_USER = new User(User.DEF_ID, User.DEF_NAME, User.DEF_AGE);
+    private static final User DEFAULT_USER_WITH_EMPTY_NAME = new User(User.DEF_ID, "", User.DEF_ROLE);
+    private static final User DEFAULT_USER = User.getDefaultUser();;
+
     @Mock
-    UserDao userDaoImpl;
+    UserDao userDaoMock;
     @InjectMocks
     UserService userService;
 
 //    @BeforeEach
-//    public void setupMock(@Mock UserDao userDaoImpl) {
-//        userDaoImpl = mock(UserDao.class);
+//    public void setupMock(@Mock UserDao userDaoMock) {
+//        userDaoMock = mock(UserDao.class);
 //        userService = new UserService(userDaoImpl);
 //    }
 
-    @BeforeEach
-    public void set() {
-        LOG.info("BeforeEach");
+//    @Test
+//    void is_Mock_Not_Null_Test() {
+//        assertThat(userDaoMock).isNotNull();
+//        assertThat(userService).isNotNull();
+//    }
+
+    @Test
+    void checkUserPresence_By_Name_Should_Return_True_Test() throws Exception {
+        given(userDaoMock.findByName(User.DEF_NAME))
+                .willReturn(DEFAULT_USER);
+
+        final boolean checkUserPresence = userService.checkUserPresence(DEFAULT_USER);
+        assertThat(checkUserPresence).isTrue();
     }
 
     @Test
-    void is_Mock_Not_Null_Test() {
-        Assertions.assertNotNull(userDaoImpl);
-        Assertions.assertNotNull(userService);
+    void checkUserPresence_By_Name_Should_Return_False_Test() throws Exception {
+        given(userDaoMock.findByName(User.DEF_NAME))
+                .willReturn(null);
+
+        final boolean checkUserPresence = userService.checkUserPresence(DEFAULT_USER);
+        assertThat(checkUserPresence).isFalse();
     }
 
     @Test
-    void getUserByIdTest() {
-        LOG.info(userService);
-        when(userService.findUserById(User.DEF_ID))
+    void checkUserPresence_By_Id_Should_Return_True_Test() throws Exception {
+        given(userDaoMock.findById(User.DEF_ID))
+                .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
+
+        final boolean checkUserPresence = userService.checkUserPresence(DEFAULT_USER_WITH_EMPTY_NAME);
+        assertThat(checkUserPresence).isTrue();
+    }
+
+    @Test
+    void checkUserPresence_By_Id_Verify_Times_Test() throws Exception {
+        given(userDaoMock.findById(User.DEF_ID))
+                .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
+
+        final boolean checkUserPresence = userService.checkUserPresence(DEFAULT_USER_WITH_EMPTY_NAME);
+        assertThat(checkUserPresence).isTrue();
+
+        verify(userDaoMock, times(0))
+                .findByName(anyString());
+        verify(userDaoMock, times(1))
+                .findById(User.DEF_ID);
+
+    }
+
+    @Test
+    void checkUserPresence_Test_Captor_By_Name_Test() throws Exception {
+        given(userDaoMock.findByName(User.DEF_NAME))
+                .willReturn(DEFAULT_USER);
+
+        final boolean checkUserPresence = userService.checkUserPresence(DEFAULT_USER);
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(userDaoMock).findByName(captor.capture());
+        final String captorValue = captor.getValue();
+
+        assertThat(captorValue).isEqualTo(User.DEF_NAME);
+    }
+
+    /**
+     * только если пустое имя, будет проверка по ид
+     * @throws Exception
+     */
+    @Test
+    void checkUserPresence_Test_Captor_By_Id_Test() throws Exception {
+        given(userDaoMock.findById(User.DEF_ID))
+                .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
+
+        final boolean checkUserPresence = userService.checkUserPresence(DEFAULT_USER_WITH_EMPTY_NAME);
+
+        ArgumentCaptor<Long> captor = ArgumentCaptor.forClass(Long.class);
+        verify(userDaoMock).findById(captor.capture());
+        final Long captorValue = captor.getValue();
+
+        assertThat(captorValue).isEqualTo(User.DEF_ID);
+    }
+
+    @Test
+    void getUserByIdTest() throws Exception {
+        when(userDaoMock.findById(User.DEF_ID))
                 .thenReturn(DEFAULT_USER);
-        Assertions.assertEquals(DEFAULT_USER, userService.findUserById(User.DEF_ID));
+        Assertions.assertEquals(
+                DEFAULT_USER,
+                userService.findUserById(User.DEF_ID)
+        );
     }
 
     @Test
     @DisplayName("😱")
-    void getUserByNameTest() {
-        LOG.info(userService);
-
-        when(userService.findUserByName(User.DEF_NAME))
+    void getUserByNameTest() throws Exception {
+        when(userDaoMock.findByName(User.DEF_NAME))
                 .thenReturn(DEFAULT_USER);
 
-        final User userByName = userService.findUserByName(User.DEF_NAME);
-        LOG.info(userByName);
+        Assertions.assertEquals(
+                DEFAULT_USER,
+                userService.findUserByName(User.DEF_NAME)
+        );
+    }
 
-        Assertions.assertEquals(DEFAULT_USER, userByName);
+    @Test
+    void if_user_id_is_negative_or_equal_to_zero_throw_exception_test() {
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.findUserById(-1L)
+        );
     }
 }

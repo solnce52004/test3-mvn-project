@@ -3,34 +3,65 @@ package dev.example.entities;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class User {
 
-    public static final int DEF_ID = 789;
+    public static final long DEF_ID = 1L;
     public static final String DEF_NAME = "Peter";
-    public static final int DEF_AGE = 100;
+    public static final String DEF_ROLE = "quest";
 
     // TODO: уточнить
     //в каких случаях при вызове конструктора поля по дефолту будут заполнены из пропертей @Value
     @Value("${default.user.id}")
-    private int id;
-    @Value("${default.user.name}")
+    private long id = Math.abs((new Random()).nextLong());
     private String name;
-    @Value("${default.user.age}")
-    private int age;
+    private String role = DEF_ROLE;
 
-    public User(
-            int id,
-            String name,
-            int age
-    ) {
-        this.id = id;
+    public User(String name) {
         this.name = name;
-        this.age = age;
     }
 
-    public int getId() {
+    public User(
+            String name,
+            String role
+    ) {
+        this.name = name;
+        this.role = role;
+    }
+
+    public User(long id, String name, String role) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
+    }
+
+    public static User getDefaultUser(){
+        return new User(DEF_ID, DEF_NAME, DEF_ROLE);
+    }
+
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
@@ -38,12 +69,12 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getId() == user.getId() && age == user.age && name.equals(user.name);
+        return getId() == user.getId() && Objects.equals(getName(), user.getName()) && Objects.equals(getRole(), user.getRole());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), name, age);
+        return Objects.hash(getId(), getName(), getRole());
     }
 
     @Override
@@ -51,7 +82,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
