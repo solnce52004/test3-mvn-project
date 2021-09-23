@@ -44,10 +44,16 @@ public class UserService {
         return userDao.findByName(name);
     }
 
-    public boolean checkUserPresence(User user) throws Exception{
-        final User byName = !user.getName().isEmpty()
-                ? userDao.findByName(user.getName())
-                : userDao.findById(user.getId());
+    public boolean checkUserPresence(User user){
+        User byName = null;
+
+        try {
+            byName = !user.getName().isEmpty()
+                    ? userDao.findByName(user.getName())
+                    : userDao.findById(user.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return byName != null;
     }
