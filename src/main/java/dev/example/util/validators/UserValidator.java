@@ -17,7 +17,7 @@ public class UserValidator implements Validator {
         this.userService = userService;
     }
 
-    public boolean isValid(User user) throws Exception {
+    public boolean isValid(User user) {
         return userService.checkUserPresence(user) && !user.getName().isEmpty();
     }
 

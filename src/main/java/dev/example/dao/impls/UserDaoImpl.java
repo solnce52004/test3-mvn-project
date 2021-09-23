@@ -5,12 +5,14 @@ import dev.example.dao.interfaces.UserDao;
 import dev.example.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Qualifier("simple")
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger(UserDaoImpl.class);

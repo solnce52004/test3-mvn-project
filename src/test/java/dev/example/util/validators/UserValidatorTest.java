@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -44,7 +43,7 @@ class UserValidatorTest {
     }
 
     @Test
-    void isValid_Should_Return_True_If_Name_Is_Not_Empty() throws Exception {
+    void isValid_Should_Return_True_If_Name_Is_Not_Empty() {
         when(USER.getId()).thenReturn(DEFAULT_USER_ID);
         when(USER.getName()).thenReturn(DEFAULT_USER_NAME);
         when(userService.checkUserPresence(USER)).thenReturn(true);

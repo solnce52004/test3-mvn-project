@@ -5,6 +5,7 @@ import dev.example.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,19 +15,19 @@ public class UserService {
 
 
     @Autowired
-    public UserService(UserDao userDao) {
+    public UserService(@Qualifier("simple") UserDao userDao) {
         this.userDao = userDao;
 
         // для проверки аспектов,
         // требуется непосредстверный вызов отслеживаемых методов
         // (в данном случае еще и помеченных кастомной аннотацией)
-        try {
-            LOG.info(this.findUserByName("hgfjghjhgjh"));
-            LOG.info(this.findUserByName("Robbert"));
-            LOG.info(this.findUserById(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            LOG.info(this.findUserByName("hgfjghjhgjh"));
+//            LOG.info(this.findUserByName("Robbert"));
+//            LOG.info(this.findUserById(3));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public User findUserById(long id) throws Exception {
