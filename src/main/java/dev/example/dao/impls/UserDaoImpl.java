@@ -5,17 +5,15 @@ import dev.example.dao.interfaces.UserDao;
 import dev.example.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Qualifier("simple")
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger LOG = LogManager.getLogger(UserDaoImpl.class);
+//    private static final Logger LOG = LogManager.getLogger(UserDaoImpl.class);
     private List<User> users = new ArrayList<>();
 
     public UserDaoImpl() {
@@ -25,7 +23,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public long createUser(String name) throws Exception {
+    public void createUserByName(String name) {
+        //
+    }
+
+    @Override
+    public long createUser(String name) {
         final User user = new User(name);
         users.add(user);
 
@@ -34,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @PrintUser(isPrint = true)
-    public User findById(long id) throws Exception {
+    public User findById(long id) {
         return users.stream()
                 .filter(u -> u.getId() == id)
                 .findAny()
@@ -43,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @PrintUser
-    public User findByName(String name) throws Exception {
+    public User findByName(String name) {
         return users.stream()
                 .filter(u -> u.getName().equals(name))
                 .findAny()

@@ -36,6 +36,9 @@ public class User {
         this.role = role;
     }
 
+    public User() {
+    }
+
     public static User getDefaultUser(){
         return new User(DEF_ID, DEF_NAME, DEF_ROLE);
     }

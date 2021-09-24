@@ -15,22 +15,24 @@ public class UserService {
 
 
     @Autowired
-    public UserService(@Qualifier("simple") UserDao userDao) {
+    public UserService(
+//            @Qualifier("userDaoMySqlJdbc")
+            @Qualifier("userDaoMySqlJdbcTemplate")
+                    UserDao userDao
+    ) {
         this.userDao = userDao;
 
         // для проверки аспектов,
         // требуется непосредстверный вызов отслеживаемых методов
         // (в данном случае еще и помеченных кастомной аннотацией)
-//        try {
+
 //            LOG.info(this.findUserByName("hgfjghjhgjh"));
 //            LOG.info(this.findUserByName("Robbert"));
 //            LOG.info(this.findUserById(3));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
     }
 
-    public User findUserById(long id) throws Exception {
+    public User findUserById(long id) {
         if (id <= 0L) {
             throw new IllegalArgumentException();
         }
@@ -38,23 +40,17 @@ public class UserService {
         return userDao.findById(id);
     }
 
-    public User findUserByName(String name) throws Exception {
+    public User findUserByName(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException();
         }
         return userDao.findByName(name);
     }
 
-    public boolean checkUserPresence(User user){
-        User byName = null;
-
-        try {
-            byName = !user.getName().isEmpty()
-                    ? userDao.findByName(user.getName())
-                    : userDao.findById(user.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public boolean checkUserPresence(User user) {
+        User byName = !user.getName().isEmpty()
+                ? userDao.findByName(user.getName())
+                : userDao.findById(user.getId());
 
         return byName != null;
     }

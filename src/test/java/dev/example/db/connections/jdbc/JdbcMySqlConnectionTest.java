@@ -1,6 +1,7 @@
 package dev.example.db.connections.jdbc;
 
 import dev.example.config.TestConfig;
+import dev.example.db.connections.BaseConnection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         loader = AnnotationConfigContextLoader.class
 )
 @ExtendWith(SpringExtension.class)
-class MySqlConnectionTest {
+class JdbcMySqlConnectionTest {
 
     @Autowired
     BaseConnection mySqlConnection;

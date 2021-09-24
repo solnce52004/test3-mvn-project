@@ -1,5 +1,6 @@
 package dev.example.db.connections.jdbc;
 
+import dev.example.db.connections.BaseConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -9,8 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @Component
-public class MySqlConnection implements BaseConnection {
-    public static final Logger LOG = LogManager.getLogger(MySqlConnection.class);
+public class JdbcMySqlConnection implements BaseConnection {
+    public static final Logger LOG = LogManager.getLogger(JdbcMySqlConnection.class);
     private Connection connect = null;
 
     @Override

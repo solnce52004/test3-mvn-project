@@ -4,7 +4,6 @@ import dev.example.dao.interfaces.UserDao;
 import dev.example.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.assertj.core.internal.bytebuddy.build.ToStringPlugin;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -39,13 +38,13 @@ class UserServiceTest {
 //    }
 
 //    @Test
-//    void is_Mock_Not_Null_Test() {
+//    void is_Mock_Not_Null() {
 //        assertThat(userDaoMock).isNotNull();
 //        assertThat(userService).isNotNull();
 //    }
 
     @Test
-    void checkUserPresence_By_Name_Should_Return_True_Test() throws Exception {
+    void checkUserPresence_By_Name_Should_Return_True() {
         given(userDaoMock.findByName(User.DEF_NAME))
                 .willReturn(DEFAULT_USER);
 
@@ -54,7 +53,7 @@ class UserServiceTest {
     }
 
     @Test
-    void checkUserPresence_By_Name_Should_Return_False_Test() throws Exception {
+    void checkUserPresence_By_Name_Should_Return_False() {
         given(userDaoMock.findByName(User.DEF_NAME))
                 .willReturn(null);
 
@@ -63,7 +62,7 @@ class UserServiceTest {
     }
 
     @Test
-    void checkUserPresence_By_Id_Should_Return_True_Test() throws Exception {
+    void checkUserPresence_By_Id_Should_Return_True() {
         given(userDaoMock.findById(User.DEF_ID))
                 .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
 
@@ -72,8 +71,8 @@ class UserServiceTest {
     }
 
     @Test
-    @Disabled
-    void checkUserPresence_By_Id_Verify_Times_Test() throws Exception {
+    @Disabled("при включении параллелизма times() меняется")
+    void checkUserPresence_By_Id_Verify_Times() {
         given(userDaoMock.findById(User.DEF_ID))
                 .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
 
@@ -87,8 +86,8 @@ class UserServiceTest {
     }
 
     @Test
-    @Disabled
-    void checkUserPresence_Test_Captor_By_Name_Test() throws Exception {
+    @Disabled("при включении параллелизма captor ломается")
+    void checkUserPresence_Test_Captor_By_Name() {
         given(userDaoMock.findByName(User.DEF_NAME))
                 .willReturn(DEFAULT_USER);
 
@@ -103,11 +102,10 @@ class UserServiceTest {
 
     /**
      * только если пустое имя, будет проверка по ид
-     * @throws Exception
      */
     @Test
-    @Disabled
-    void checkUserPresence_Test_Captor_By_Id_Test() throws Exception {
+    @Disabled("при включении параллелизма captor ломается")
+    void checkUserPresence_Test_Captor_By_Id() {
         given(userDaoMock.findById(User.DEF_ID))
                 .willReturn(DEFAULT_USER_WITH_EMPTY_NAME);
 
@@ -121,7 +119,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByIdTest() throws Exception {
+    void getUserByIdTest() {
         when(userDaoMock.findById(User.DEF_ID))
                 .thenReturn(DEFAULT_USER);
         Assertions.assertEquals(
@@ -132,7 +130,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("😱")
-    void getUserByNameTest() throws Exception {
+    void getUserByNameTest() {
         when(userDaoMock.findByName(User.DEF_NAME))
                 .thenReturn(DEFAULT_USER);
 

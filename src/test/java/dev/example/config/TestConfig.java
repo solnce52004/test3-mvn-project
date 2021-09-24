@@ -1,10 +1,9 @@
 package dev.example.config;
 
-import dev.example.dao.impls.UserDaoImpl;
-import dev.example.dao.impls.UserDaoJdbcMysql;
-import dev.example.dao.interfaces.UserDao;
-import dev.example.db.connections.jdbc.BaseConnection;
-import dev.example.db.connections.jdbc.MySqlConnection;
+import dev.example.dao.impls.UserDaoMySqlJdbc;
+import dev.example.dao.impls.UserDaoMySqlJdbcTemplate;
+import dev.example.db.connections.BaseConnection;
+import dev.example.db.connections.jdbc.JdbcMySqlConnection;
 import dev.example.services.UserService;
 import dev.example.util.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,12 +11,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
 
 import static org.mockito.Mockito.mock;
 
 @Configuration()
-@PropertySource("classpath:test-application.properties")
+@PropertySource(
+        value = "classpath:test-application.properties",
+        ignoreResourceNotFound = true
+)
 public class TestConfig {
 
     @Value("${test_db}")
@@ -25,7 +30,7 @@ public class TestConfig {
 
     @Bean
     public BaseConnection mySqlConnection(){
-        return new MySqlConnection();
+        return new JdbcMySqlConnection();
     }
 
     @Bean
@@ -49,7 +54,7 @@ public class TestConfig {
 //    }
 
     @Bean
-    UserDaoJdbcMysql userDaoJdbcMysql(BaseConnection mySqlConnection){
-        return new UserDaoJdbcMysql(mySqlConnection, test_database);
+    public UserDaoMySqlJdbc userDaoMyDqlJdbc(BaseConnection mySqlConnection){
+        return new UserDaoMySqlJdbc(mySqlConnection, test_database);
     }
 }

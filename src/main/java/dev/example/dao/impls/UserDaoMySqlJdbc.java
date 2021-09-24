@@ -1,7 +1,7 @@
 package dev.example.dao.impls;
 
 import dev.example.dao.interfaces.UserDao;
-import dev.example.db.connections.jdbc.BaseConnection;
+import dev.example.db.connections.BaseConnection;
 import dev.example.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,14 +12,16 @@ import java.sql.*;
 import java.util.List;
 
 @Repository
-@Qualifier("jdbcmysql")
-public class UserDaoJdbcMysql implements UserDao {
+public class UserDaoMySqlJdbc implements UserDao {
 
     private final Connection connect;
     private final BaseConnection mySqlConnect;
 
     @Autowired
-    public UserDaoJdbcMysql(BaseConnection mySqlConnect, @Value("${prod_db}") String db) {
+    public UserDaoMySqlJdbc(
+            @Qualifier("jdbcMySqlConnection") BaseConnection mySqlConnect,
+            @Value("${prod_db}") String db
+    ) {
         this.mySqlConnect = mySqlConnect;
         this.connect = mySqlConnect.getConnect(db);
     }
@@ -54,14 +56,19 @@ public class UserDaoJdbcMysql implements UserDao {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            mySqlConnect.closeConnect();
+//            mySqlConnect.closeConnect();
         }
 
         return returnedKey;
     }
 
     @Override
-    public long createUser(String name) throws Exception {
+    public void createUserByName(String name) {
+        //
+    }
+
+    @Override
+    public long createUser(String name) {
         PreparedStatement preparedStatement = null;
         long returnedKey = 0L;
 
@@ -90,19 +97,19 @@ public class UserDaoJdbcMysql implements UserDao {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            mySqlConnect.closeConnect();
+//            mySqlConnect.closeConnect();
         }
 
         return returnedKey;
     }
 
     @Override
-    public User findById(long id) throws Exception {
+    public User findById(long id) {
         return null;
     }
 
     @Override
-    public User findByName(String name) throws Exception {
+    public User findByName(String name) {
         return null;
     }
 

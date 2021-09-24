@@ -5,11 +5,18 @@ import dev.example.entities.User;
 import java.util.List;
 
 public interface UserDao {
-    long createUser(String name) throws Exception;
+    void createUserByName(String name);
 
-    User findById(long id) throws Exception;
+    /**
+     * @deprecated
+     * @see #createUserByName(String name)
+     */
+    @Deprecated(forRemoval = false)
+    long createUser(String name);
 
-    User findByName(String name) throws Exception;
+    User findById(long id);
+
+    User findByName(String name);
 
     List<User> findAllUsers();
 }
