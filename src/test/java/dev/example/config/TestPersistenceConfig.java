@@ -1,11 +1,13 @@
 package dev.example.config;
 
 import dev.example.dao.impls.UserDaoMySqlJdbcTemplate;
+import dev.example.dao.impls.UserDaoMysqlNamedParameterJdbcTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -41,5 +43,14 @@ public class TestPersistenceConfig {
     @Bean
     public UserDaoMySqlJdbcTemplate userDaoMySqlJdbcTemplate(DataSource dataSource) {
         return new UserDaoMySqlJdbcTemplate(jdbcTemplate(dataSource));
+    }
+
+    @Bean
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource){
+        return new NamedParameterJdbcTemplate(dataSource);
+    }
+    @Bean
+    public UserDaoMysqlNamedParameterJdbcTemplate userDaoMysqlNamedParameterJdbcTemplate(DataSource dataSource){
+        return new UserDaoMysqlNamedParameterJdbcTemplate(dataSource);
     }
 }

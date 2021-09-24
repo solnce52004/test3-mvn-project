@@ -34,7 +34,7 @@ class UserValidatorTest {
     public static final User USER = mock(User.class);
 
     @Test
-    void isValid_Should_Return_True_If_Name_Is_Empty() throws Exception {
+    void isValid_Should_Return_True_If_Name_Is_Empty() {
         when(USER.getId()).thenReturn(DEFAULT_USER_ID);
         when(USER.getName()).thenReturn(EMPTY_USER_NAME);
         when(userService.checkUserPresence(USER)).thenReturn(true);

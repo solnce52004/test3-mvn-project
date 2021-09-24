@@ -7,11 +7,6 @@ import java.util.List;
 public interface UserDao {
     void createUserByName(String name);
 
-    /**
-     * @deprecated
-     * @see #createUserByName(String name)
-     */
-    @Deprecated(forRemoval = false)
     long createUser(String name);
 
     User findById(long id);
@@ -19,4 +14,8 @@ public interface UserDao {
     User findByName(String name);
 
     List<User> findAllUsers();
+
+    void truncateUsers();
+
+    void createUserByObject(User user);
 }

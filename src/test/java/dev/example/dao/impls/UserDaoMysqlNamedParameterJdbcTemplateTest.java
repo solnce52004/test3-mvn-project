@@ -16,10 +16,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
         classes = TestPersistenceConfig.class,
         loader = AnnotationConfigContextLoader.class
 )
-class UserDaoMySqlJdbcTemplateTest {
+class UserDaoMysqlNamedParameterJdbcTemplateTest {
 
     @Autowired
-    UserDaoMySqlJdbcTemplate userDao;
+    UserDaoMysqlNamedParameterJdbcTemplate userDao;
 
     @BeforeEach
     void setUp() {
@@ -32,6 +32,13 @@ class UserDaoMySqlJdbcTemplateTest {
         Assertions.assertThat(userDao.findByName(User.DEF_NAME))
                 .isNotNull();
     }
+
+    @Test
+    void createUser() {
+        Assertions.assertThat(userDao.createUser(User.DEF_NAME))
+                .isPositive();
+    }
+
 
     @Test
     void findById() {
@@ -57,5 +64,26 @@ class UserDaoMySqlJdbcTemplateTest {
         userDao.truncateUsers();
         Assertions.assertThat(userDao.findAllUsers())
                 .isEmpty();
+    }
+
+    @Test
+    void countRoles() {
+        userDao.truncateUsers();
+        userDao.createUserByObject(new User("Bob", "admin"));
+        userDao.createUserByObject(new User("Bob", "admin"));
+        userDao.createUserByObject(new User("Rob", "quest"));
+        userDao.createUserByObject(new User("Rob", "quest"));
+        userDao.createUserByObject(new User("Dob", "support"));
+
+        Assertions.assertThat(userDao.countRoles())
+                .matches(m -> m.size() == 3);
+    }
+
+    @Test
+    void createUserByObject(){
+        userDao.truncateUsers();
+        userDao.createUserByObject(new User("Bob", "admin"));
+        Assertions.assertThat(userDao.findByName("Bob"))
+                .isNotNull();
     }
 }

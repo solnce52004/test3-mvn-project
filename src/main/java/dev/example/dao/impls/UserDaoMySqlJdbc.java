@@ -117,4 +117,15 @@ public class UserDaoMySqlJdbc implements UserDao {
     public List<User> findAllUsers() {
         return null;
     }
+
+
+    @Override
+    public void truncateUsers() {
+        //
+    }
+
+    @Override
+    public void createUserByObject(User user) {
+        //
+    }
 }

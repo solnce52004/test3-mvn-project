@@ -18,17 +18,17 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 class UserDaoMySqlJdbcTest {
 
     @Autowired
-    UserDaoMySqlJdbc userDaoMySqlJdbc;
+    UserDaoMySqlJdbc userDao;
 
     @Test
     void dirtyCreateUser() {
-        Assertions.assertThat(userDaoMySqlJdbc.dirtyCreateUser(User.DEF_NAME))
+        Assertions.assertThat(userDao.dirtyCreateUser(User.DEF_NAME))
                 .isPositive();
     }
 
     @Test
     void createUser() {
-        Assertions.assertThat(userDaoMySqlJdbc.createUser(User.DEF_NAME))
+        Assertions.assertThat(userDao.createUser(User.DEF_NAME))
                 .isPositive();
     }
 

@@ -5,6 +5,8 @@ import dev.example.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,6 +30,17 @@ public class UserDaoMySqlJdbcTemplate implements UserDao {
     }
 
     @Override
+    public long createUser(String name) {
+//
+//        KeyHolder keyHolder = new GeneratedKeyHolder();
+//        jdbcTemplate.update(
+//                "INSERT INTO `users` (`name`, `role`) VALUES (?, ?)",
+//                name, User.DEF_ROLE
+//        );
+        return 0;
+    }
+
+    @Override
     public User findById(long id) {
         return jdbcTemplate.query(
                 "SELECT * FROM `users` WHERE id = ?",
@@ -43,7 +56,13 @@ public class UserDaoMySqlJdbcTemplate implements UserDao {
     public User findByName(String name) {
         return jdbcTemplate.query(
                 "SELECT * FROM `users` WHERE `name` = ? LIMIT 1",
-                new BeanPropertyRowMapper<>(User.class),
+                (resultSet, i) -> {
+                    final var user = new User();
+                    user.setId(resultSet.getLong(1));
+                    user.setName(resultSet.getString(2));
+                    user.setRole(resultSet.getString(3));
+                    return user;
+                },
                 name
         )
                 .stream()
@@ -59,17 +78,13 @@ public class UserDaoMySqlJdbcTemplate implements UserDao {
         );
     }
 
+    @Override
     public void truncateUsers() {
         jdbcTemplate.update("TRUNCATE TABLE `users`");
     }
 
-    /**
-     * @deprecated
-     * @see #createUserByName(String name)
-     */
     @Override
-    @Deprecated(forRemoval = false)
-    public long createUser(String name) {
-        return 0;
+    public void createUserByObject(User user) {
+        //
     }
 }

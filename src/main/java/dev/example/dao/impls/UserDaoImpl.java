@@ -57,4 +57,14 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllUsers() {
         return users;
     }
+
+    @Override
+    public void truncateUsers() {
+        //
+    }
+
+    @Override
+    public void createUserByObject(User user) {
+        //
+    }
 }
