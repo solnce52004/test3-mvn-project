@@ -18,39 +18,43 @@ import javax.sql.DataSource;
         ignoreResourceNotFound = true
 )
 public class TestPersistenceConfig {
+    @Value("${db.driver}")
+    String driver;
+    @Value("${db.url}")
+    String url;
+    @Value("${db.user}")
+    String userName;
+    @Value("${db.password}")
+    String password;
 
     @Bean
-    public DataSource dataSource(
-            @Value("${db.driver}") String driver,
-            @Value("${db.url}") String url,
-            @Value("${db.user}") String user,
-            @Value("${db.password}") String password
-    ) {
+    public DataSource dataSource() {
         final var driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName(driver);
         driverManagerDataSource.setUrl(url);
-        driverManagerDataSource.setUsername(user);
+        driverManagerDataSource.setUsername(userName);
         driverManagerDataSource.setPassword(password);
 
         return driverManagerDataSource;
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
     }
 
     @Bean
-    public UserDaoMySqlJdbcTemplate userDaoMySqlJdbcTemplate(DataSource dataSource) {
-        return new UserDaoMySqlJdbcTemplate(jdbcTemplate(dataSource));
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(dataSource());
     }
 
     @Bean
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource){
-        return new NamedParameterJdbcTemplate(dataSource);
+    public UserDaoMySqlJdbcTemplate userDaoMySqlJdbcTemplate() {
+        return new UserDaoMySqlJdbcTemplate(jdbcTemplate());
     }
+
     @Bean
-    public UserDaoMysqlNamedParameterJdbcTemplate userDaoMysqlNamedParameterJdbcTemplate(DataSource dataSource){
-        return new UserDaoMysqlNamedParameterJdbcTemplate(dataSource);
+    public UserDaoMysqlNamedParameterJdbcTemplate userDaoMysqlNamedParameterJdbcTemplate() {
+        return new UserDaoMysqlNamedParameterJdbcTemplate(namedParameterJdbcTemplate());
     }
 }

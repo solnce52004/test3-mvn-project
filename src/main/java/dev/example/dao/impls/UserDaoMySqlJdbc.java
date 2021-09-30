@@ -15,14 +15,12 @@ import java.util.List;
 public class UserDaoMySqlJdbc implements UserDao {
 
     private final Connection connect;
-    private final BaseConnection mySqlConnect;
 
     @Autowired
     public UserDaoMySqlJdbc(
             @Qualifier("jdbcMySqlConnection") BaseConnection mySqlConnect,
             @Value("${prod_db}") String db
     ) {
-        this.mySqlConnect = mySqlConnect;
         this.connect = mySqlConnect.getConnect(db);
     }
 

@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,11 +19,11 @@ import java.util.TreeMap;
 @Repository
 public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
     public static final Logger LOG = LogManager.getLogger(UserDaoMysqlNamedParameterJdbcTemplate.class);
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public UserDaoMysqlNamedParameterJdbcTemplate(DataSource dataSource) {
-        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    public UserDaoMysqlNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", name);
         params.addValue("role", User.DEF_ROLE);
-        jdbcTemplate.update(
+        namedParameterJdbcTemplate.update(
                 "INSERT INTO `users` (`name`, `role`) VALUES (:name, :role)",
                 params
         );
@@ -48,7 +47,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
         System.out.println(params);
 
 
-        jdbcTemplate.update(
+        namedParameterJdbcTemplate.update(
                 "INSERT INTO `users` (`name`, `role`) VALUES (:name, :role)",
                 params,
                 keyHolder
@@ -74,7 +73,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
 
     @Override
     public User findById(long id) {
-        return jdbcTemplate.getJdbcOperations().query(
+        return namedParameterJdbcTemplate.getJdbcOperations().query(
                 "SELECT * FROM `users` WHERE id = ?",
                 new BeanPropertyRowMapper<>(User.class),
                 id
@@ -86,7 +85,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
 
     @Override
     public User findByName(String name) {
-        return jdbcTemplate.getJdbcOperations().query(
+        return namedParameterJdbcTemplate.getJdbcOperations().query(
                 "SELECT * FROM `users` WHERE `name` = ? LIMIT 1",
                 (resultSet, i) -> {
                     final var user = new User();
@@ -103,7 +102,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
     }
 
     public Map<String, Integer> countRoles() {
-        return jdbcTemplate.query(
+        return namedParameterJdbcTemplate.query(
                 "SELECT `role`, count(*) as count_roles FROM `users` GROUP BY `role`",
                 resultSet -> {
                     final TreeMap<String, Integer> map = new TreeMap<>();
@@ -120,7 +119,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
 
     @Override
     public List<User> findAllUsers() {
-        return jdbcTemplate.getJdbcOperations().query(
+        return namedParameterJdbcTemplate.getJdbcOperations().query(
                 "SELECT * FROM `users`",
                 new BeanPropertyRowMapper<>(User.class)
         );
@@ -128,7 +127,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
 
     @Override
     public void truncateUsers() {
-        jdbcTemplate.getJdbcOperations().update("TRUNCATE TABLE `users`");
+        namedParameterJdbcTemplate.getJdbcOperations().update("TRUNCATE TABLE `users`");
     }
 
     @Override
@@ -137,7 +136,7 @@ public class UserDaoMysqlNamedParameterJdbcTemplate implements UserDao {
         params.addValue("name", user.getName());
         params.addValue("role", user.getRole());
 
-        jdbcTemplate.update(
+        namedParameterJdbcTemplate.update(
                 "INSERT INTO `users` (`name`, `role`) VALUES (:name, :role)",
                 params
         );
