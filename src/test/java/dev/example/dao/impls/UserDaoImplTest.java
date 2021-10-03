@@ -1,7 +1,7 @@
 package dev.example.dao.impls;
 
 import dev.example.dao.interfaces.UserDao;
-import dev.example.entities.User;
+import dev.example.dto.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

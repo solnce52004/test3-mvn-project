@@ -2,9 +2,7 @@ package dev.example.dao.impls;
 
 import dev.example.aop.annotations.PrintUser;
 import dev.example.dao.interfaces.UserDao;
-import dev.example.entities.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import dev.example.dto.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

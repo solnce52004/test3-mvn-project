@@ -1,6 +1,6 @@
 package dev.example.util.validators;
 
-import dev.example.entities.User;
+import dev.example.dto.User;
 import dev.example.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

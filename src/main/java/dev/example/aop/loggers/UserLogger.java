@@ -2,7 +2,7 @@ package dev.example.aop.loggers;
 
 import dev.example.aop.annotations.PrintUser;
 import dev.example.dao.impls.UserDaoImpl;
-import dev.example.entities.User;
+import dev.example.dto.User;
 
 //logback
 //import org.slf4j.Logger;

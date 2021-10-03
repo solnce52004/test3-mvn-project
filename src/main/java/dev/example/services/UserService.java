@@ -1,7 +1,7 @@
 package dev.example.services;
 
 import dev.example.dao.interfaces.UserDao;
-import dev.example.entities.User;
+import dev.example.dto.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private static final Logger LOG = LogManager.getLogger(UserService.class);
     private final UserDao userDao;
-
 
     @Autowired
     public UserService(

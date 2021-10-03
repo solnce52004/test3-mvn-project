@@ -1,4 +1,4 @@
-package dev.example.entities;
+package dev.example.dto;
 
 import org.springframework.beans.factory.annotation.Value;
 

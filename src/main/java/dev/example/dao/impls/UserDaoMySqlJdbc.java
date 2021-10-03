@@ -2,7 +2,7 @@ package dev.example.dao.impls;
 
 import dev.example.dao.interfaces.UserDao;
 import dev.example.db.connections.BaseConnection;
-import dev.example.entities.User;
+import dev.example.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

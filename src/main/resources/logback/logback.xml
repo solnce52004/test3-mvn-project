@@ -27,5 +27,5 @@
     </root>
 
     <logger name="dev.example.services.UserService" level="ERROR"/>
-    <logger name="dev.example.entities.User" level="DEBUG"/>
+    <logger name="dev.example.dto.User" level="DEBUG"/>
 </configuration>

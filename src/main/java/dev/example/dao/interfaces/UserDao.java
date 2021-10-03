@@ -1,6 +1,6 @@
 package dev.example.dao.interfaces;
 
-import dev.example.entities.User;
+import dev.example.dto.User;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package dev.example.dao.impls;
 
 import dev.example.config.TestPersistenceConfig;
-import dev.example.entities.User;
+import dev.example.dto.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

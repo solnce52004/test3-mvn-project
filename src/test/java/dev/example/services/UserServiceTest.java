@@ -1,7 +1,7 @@
 package dev.example.services;
 
 import dev.example.dao.interfaces.UserDao;
-import dev.example.entities.User;
+import dev.example.dto.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;

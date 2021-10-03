@@ -1,7 +1,7 @@
 package dev.example.util.validators;
 
 import dev.example.config.TestConfig;
-import dev.example.entities.User;
+import dev.example.dto.User;
 import dev.example.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
